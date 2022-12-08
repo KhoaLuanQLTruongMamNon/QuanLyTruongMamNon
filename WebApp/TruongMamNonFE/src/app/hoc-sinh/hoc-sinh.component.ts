@@ -9,7 +9,7 @@ import { ExportService } from '../services/export.service';
 import { LopHoc } from '../models/lop-hoc.model';
 
 @Component({
-  selector: 'app-lop-hoc',
+  selector: 'app-hoc-sinh',
   templateUrl: './hoc-sinh.component.html',
   providers: [MessageService, ConfirmationService],
   styleUrls: ['./hoc-sinh.component.scss'],
@@ -30,11 +30,30 @@ export class HocSinhComponent implements OnInit {
   
   public hocSinh:HocSinh=Object.assign({},this.dataService.newHocSinh);
   public submitted: boolean = false;
-  public gioiTinhs:any[]=[{name: "Nam", key:0},{name:"Nữ", key:1}, {name:"Khác", key:2}];
+  public gioiTinhs:any[]=[];
+  public danTocs:any[]=this.dataService.danTocs;
+  public tonGiaos:any[]=this.dataService.tonGiaos;
+  public quocTichs:any[]=this.dataService.quocGias;
   public trangThaiHocs:any[]=[{name: "Đang học", key:0},{name:"Đã nghỉ", key:1}];
-
+  public khoiLops:KhoiLop[]=[];
+  public selectedKhoiLop:KhoiLop|undefined;
+  public lopHocs:LopHoc[]=[];
+  public selectedLopHoc:LopHoc|undefined;
+  public selectedGioiTinh:any|undefined;
+  public selectedNienHoc:NienHoc|undefined;
+  public selectedTrangThaiHoc:any|undefined;
+  public selectedDanToc:any|undefined;
+  public selectedTonGiao:any|undefined;
+  public selectedQuocTich:any|undefined;
+  public nienHocs:NienHoc[]=[];
+  
   public ngOnInit(): void {
     this.getHocSinhs();
+    this.getKhoiLops();
+    this.dataService.selectedNienHoc$.subscribe((nienHoc)=>{
+      this.selectedNienHoc=nienHoc;
+    });
+    this.gioiTinhs=this.dataService.gioiTinhs;
   }
 
   public exportExcel(){
@@ -78,24 +97,55 @@ export class HocSinhComponent implements OnInit {
       this.hocSinhs=data;
       //this.displayHocSinhs=this.hocSinhs.filter((hocSinh)=>hocSinh.nienHoc.maNienHoc===this.selectedNienHoc?.maNienHoc);
       this.loading=false;
+    });     
+    
+  }
+
+  public getKhoiLops():void{
+    // this.loading=true;
+    this.dataService.getKhoiLops().subscribe((data)=>{
+      this.khoiLops=data;
+      // this.loading=false;
+      //this.getHocSinhs();
     });
-      
+  }
+
+  public getLopHocsByKhoiLop():void{
+    // this.loading=true;
+    if(this.selectedNienHoc && this.selectedKhoiLop){
+      this.dataService.getLopHocsByKhoiLop(this.selectedNienHoc?.maNienHoc, this.selectedKhoiLop?.maKhoiLop).subscribe((data)=>{
+        this.lopHocs=data;
+        // this.loading=false;
+        //this.getHocSinhs();
+      });
+    }
     
   }
 
   public openNew(): void {
     this.hocSinh = Object.assign({}, this.dataService.newHocSinh);
+    this.submitted=false;
     this.hocSinhDialog = true;
+    this.getKhoiLops();
   }
 
   public editHocSinh(hocSinh: HocSinh): void {
     console.log('edit hocSinh:', hocSinh);
     this.hocSinh = hocSinh;
+    this.selectedKhoiLop=this.hocSinh.khoiLop;
+    this.selectedLopHoc=this.hocSinh.lopHoc;
+    this.selectedGioiTinh=this.hocSinh.gioiTinh;
+    this.selectedTrangThaiHoc=this.hocSinh.trangThaiHoc;
+    this.selectedDanToc=this.hocSinh.danToc;
+    this.selectedTonGiao=this.hocSinh.tonGiao;
+    this.selectedQuocTich=this.hocSinh.quocTich;
     this.hocSinhDialog = true;
+    this.getKhoiLops();
+    this.getLopHocsByKhoiLop();
   }
 
   public deleteHocSinh(hocSinh: HocSinh) {
-    console.log('delete danh muc thuc don', hocSinh);
+    console.log('delete hoc sinh', hocSinh);
     this.confirmationService.confirm({
       message: 'Bạn có muốn xóa ' + hocSinh.ho + ' ' + hocSinh.ten +'?',
       header: 'Xác nhận',
@@ -118,12 +168,12 @@ export class HocSinhComponent implements OnInit {
     console.log('hideDialog: ');
     this.hocSinhDialog = false;
     if (cancel) {
-      this.messageService.add({
-        severity: 'info',
-        summary: 'Hủy',
-        detail: 'Đã hủy',
-        life: 3000,
-      });
+      // this.messageService.add({
+      //   severity: 'info',
+      //   summary: 'Hủy',
+      //   detail: 'Đã hủy',
+      //   life: 3000,
+      // });
     } else if (success) {
       this.messageService.add({
         severity: 'success',
@@ -143,7 +193,30 @@ export class HocSinhComponent implements OnInit {
   }
 
   public saveHocSinh() {
+    this.submitted=true;
     console.log('saveHocSinh: ', this.hocSinh);
+    if(!this.selectedKhoiLop){
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Lỗi',
+        detail: 'Chưa chọn khối lớp',
+        life: 3000,
+      });
+      return;
+    }
+    this.hocSinh.maKhoiLop=this.selectedKhoiLop.maKhoiLop;
+    if(this.selectedLopHoc){
+      this.hocSinh.maLopHoc=this.selectedLopHoc.maLop;
+    }
+    this.hocSinh.gioiTinh=this.selectedGioiTinh.name;
+    this.hocSinh.trangThaiHoc=this.selectedTrangThaiHoc.name;
+    this.hocSinh.danToc=this.selectedDanToc.TenDanToc;
+    this.hocSinh.tonGiao=this.selectedTonGiao.TenTonGiao;
+    this.hocSinh.quocTich=this.selectedQuocTich.TenQuocGia;
+
+    console.log('saveHocSinh: ', this.hocSinh);
+    console.log('ma khoi lop', this.selectedKhoiLop.maKhoiLop);
+    console.log('ma lop', this.selectedLopHoc?.maLop);
     if (this.hocSinh.maHocSinh === "") {
       this.dataService.postHocSinh(this.hocSinh).subscribe(
         (data) => {
@@ -170,6 +243,42 @@ export class HocSinhComponent implements OnInit {
         }
       );
     }
+  }
+
+  public onKhoiLopChange(event:any):void{
+    const khopLop:KhoiLop=event;
+    this.selectedKhoiLop=khopLop;
+    this.getLopHocsByKhoiLop();
+  }
+
+  public onLopHocChange(event:any):void{
+    const lopHoc:LopHoc=event;
+    this.selectedLopHoc=lopHoc;
+  }
+
+  public onGioiTinhChange(event:any):void{
+    const gioiTinh:any=event;
+    this.selectedGioiTinh=gioiTinh;
+  }
+
+  public onTrangThaiHocChange(event:any):void{
+    const trangThaiHoc:any=event;
+    this.selectedTrangThaiHoc=trangThaiHoc;
+  }
+
+  public onDanTocChange(event:any):void{
+    const danToc:any=event;
+    this.selectedDanToc=danToc;
+  }
+
+  public onTonGiaoChange(event:any):void{
+    const tonGiao:any=event;
+    this.selectedTonGiao=tonGiao;
+  }
+
+  public onQuocTichChange(event:any):void{
+    const quocTich:any=event;
+    this.selectedQuocTich=quocTich;
   }
 
 }

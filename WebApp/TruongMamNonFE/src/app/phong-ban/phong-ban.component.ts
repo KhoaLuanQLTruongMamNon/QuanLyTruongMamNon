@@ -3,35 +3,64 @@ import { DataService } from '../services/data.service';
 import { PhongBan } from '../models/phong-ban.model';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
-
+import { ExportService } from '../services/export.service';
 
 @Component({
   selector: 'app-phong-ban',
   templateUrl: './phong-ban.component.html',
   providers: [MessageService, ConfirmationService],
   styleUrls: ['./phong-ban.component.scss'],
-
 })
 export class PhongBanComponent implements OnInit {
   constructor(
     private dataService: DataService,
+    private exportService: ExportService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) {}
-  
+
   public loading = true;
-  public phongBanDialog = false;
+  public phongBanDialog: boolean = false;
 
   public phongBans: PhongBan[] = [];
 
   
   public phongBan:PhongBan=Object.assign({},this.dataService.newPhongBan);
-  public submitted: boolean = false;
+  public submitted: boolean = false; 
+  public cols: any[]|undefined;
 
-  
-
+  public exportColumns: any[]|undefined;
   public ngOnInit(): void {
     this.getPhongBans();
+  }
+
+  public exportExcel(){
+    const exportData:any[]=[];
+    this.phongBans.forEach((table)=>{
+      exportData.push({
+        TenPhongBan: table.tenPhongBan,
+        GhiChu:table.ghiChu,
+      });
+    });
+    this.exportService.exportExcel(exportData, 'PhongBan');
+  }
+
+  public exportPdf(){
+    const exportData:any[]=[];
+    this.phongBans.forEach((table)=>{
+      exportData.push({
+        TenPhongBan: table.tenPhongBan,
+        GhiChu:table.ghiChu,
+      });
+    });
+    this.exportService.exportPdf(
+      {
+        TenPhongBan: "Tên phòng ban", 
+        GhiChu: "Ghi Chú", 
+      },
+      exportData, 
+      'PhongBan'
+    );
   }
 
   public getPhongBans():void{
@@ -80,7 +109,7 @@ export class PhongBanComponent implements OnInit {
       this.messageService.add({
         severity: 'info',
         summary: 'Hủy',
-        detail: 'Đã hủy',
+        detail: 'Không muốn thêm nữa',
         life: 3000,
       });
     } else if (success) {
@@ -102,12 +131,13 @@ export class PhongBanComponent implements OnInit {
   }
 
   public savePhongBan() {
+    this.submitted = true;
     console.log('savePhongBan: ', this.phongBan);
     if (this.phongBan.maPhongBan === 0) {
       this.dataService.postPhongBan(this.phongBan).subscribe(
         (data) => {
           console.log('return data = ', data);
-          this.phongBans.push(data);
+          // this.phongBans.push(data);
           this.getPhongBans();
           this.hideDialog(false, true);
         },
@@ -117,6 +147,7 @@ export class PhongBanComponent implements OnInit {
         }
       );
     } else {
+      console.log('ma', this.phongBan.maPhongBan);
       this.dataService.putPhongBan(this.phongBan.maPhongBan, this.phongBan).subscribe(
         (data) => {
           console.log('return data = ', data);

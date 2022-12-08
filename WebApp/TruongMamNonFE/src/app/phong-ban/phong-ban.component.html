@@ -6,7 +6,7 @@
 ></p-progressBar>
 <p style="font-size: 200%" *ngIf="loading">Đang tải dữ liệu...</p>
 <div class="card" *ngIf="!loading">
-  <p-toolbar styleClass="mb-4 gap-2">
+  <p-toolbar styleClass="mb-1 gap-2">
     <ng-template pTemplate="left">
       <button
         pButton
@@ -14,6 +14,8 @@
         label="Thêm"
         icon="pi pi-plus"
         class="p-button-success mr-2"
+        pTooltip="Thêm"
+        tooltipPosition="bottom"
         (click)="openNew()"
       ></button>
       <button
@@ -22,6 +24,8 @@
         label="Tải lại"
         icon="pi pi-refresh"
         class="p-button-primary mr-2"
+        pTooltip="Tải lại"
+        tooltipPosition="bottom"
         (click)="getPhongBans()"
       ></button>
     </ng-template>
@@ -31,16 +35,34 @@
         mode="basic"
         accept="image/*"
         [maxFileSize]="1000000"
-        label="Nhập file"
         chooseLabel="Nhập file"
-        class="p-mr-2 p-d-inline-block"
+        pTooltip="Nhập file"
+        tooltipPosition="bottom"
+        class="p-mr-2 p-d-inline-block mr-2"
       ></p-fileUpload>
+
       <button
+        type="button"
         pButton
         pRipple
-        label="Xuất file"
-        icon="pi pi-file-export"
-        class="p-button-help ml-2"
+        icon="pi pi-file-excel"
+        (click)="exportExcel()"
+        class="p-button-success mr-2"
+        label="Xuất Excel"
+        pTooltip="Xuất Excel"
+        tooltipPosition="bottom"
+      ></button>
+
+      <button
+        type="button"
+        pButton
+        pRipple
+        icon="pi pi-file-pdf"
+        (click)="exportPdf()"
+        class="p-button-warning"
+        label="Xuất PDF"
+        pTooltip="Xuất PDF"
+        tooltipPosition="bottom"
       ></button>
     </ng-template>
   </p-toolbar>
@@ -50,13 +72,14 @@
     [value]="phongBans"
     [rows]="10"
     [paginator]="true"
-    [globalFilterFields]="['maPhongBan', 'tenPhongBan']"
+    [globalFilterFields]="['tenPhongBan']"
     [tableStyle]="{ 'min-width': '75rem' }"
     [rowHover]="true"
     dataKey="maPhongBan"
     currentPageReportTemplate="Hiển thị {first} đến {last} trong {totalRecords} mục"
     [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[10, 25, 50]"
+    styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
   >
     <ng-template pTemplate="caption">
       <div class="flex align-items-center justify-content-between">
@@ -75,12 +98,12 @@
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="tenPhongBan" style="min-width: 15rem">
-          Tên phòng ban <p-sortIcon field="tenPhongBan"></p-sortIcon>
+          Tên PhongBan <p-sortIcon field="tenPhongBan"></p-sortIcon>
         </th>
         <th pSortableColumn="ghiChu" style="min-width: 10rem">
           Ghi Chú <p-sortIcon field="ghiChu"></p-sortIcon>
         </th>
-        <th style="min-width: 5rem"></th>
+        <th style="width: 8rem"></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-phongBan>
@@ -93,6 +116,8 @@
             pRipple
             icon="pi pi-pencil"
             class="p-button-rounded p-button-success mr-2"
+            pTooltip="Sửa"
+            tooltipPosition="bottom"
             (click)="editPhongBan(phongBan)"
           ></button>
           <button
@@ -100,6 +125,8 @@
             pRipple
             icon="pi pi-trash"
             class="p-button-rounded p-button-warning"
+            pTooltip="Xóa"
+            tooltipPosition="bottom"
             (click)="deletePhongBan(phongBan)"
           ></button>
         </td>
@@ -116,13 +143,13 @@
 <p-dialog
   [(visible)]="phongBanDialog"
   [style]="{ width: '550px' }"
-  header="Chi tiết danh mục thực đơn"
+  header="Chi tiết phòng ban"
   [modal]="true"
   styleClass="p-fluid"
 >
   <ng-template pTemplate="content">
     <div class="field">
-      <label for="tenPhongBan">Tên phòng ban</label>
+      <label for="tenPhongBan" class="required-field">Tên phòng ban</label>
       <input
         type="text"
         pInputText

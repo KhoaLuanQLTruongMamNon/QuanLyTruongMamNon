@@ -1,10 +1,14 @@
-﻿namespace TruongMamNon.BackendApi.ViewModels.MamNon
+﻿using TruongMamNon.BackendApi.Data.Entities;
+
+namespace TruongMamNon.BackendApi.ViewModels.MamNon
 {
     public class CreateHocSinhVm
     {
+        public string MaHocSinh { get; set; }
         public string Ho { get; set; }
         public string Ten { get; set; }
         public string GioiTinh { get; set; }
+        public int MaKhoiLop { get; set; }
         public int? MaLopHoc { get; set; }
         public DateTime NgayNhapHoc { get; set; }
         public string TrangThaiHoc { get; set; }
@@ -24,6 +28,8 @@
 
         public string MatKhau { get; set; }
         public string TrangThaiTaiKhoan { get; set; }
+
+        //Phu huynh
 
         public string HoTenPhuHuynh { get; set; }
         public DateTime? NamSinhPhuHuynh { get; set; }

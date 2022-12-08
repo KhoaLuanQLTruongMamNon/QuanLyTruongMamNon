@@ -21,7 +21,7 @@ namespace TruongMamNon.BackendApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostPhongBan(PhongBanVm model)
+        public async Task<IActionResult> PostPhongBan(CreatePhongBanVm model)
         {
             var phongBan = new PhongBan()
             {
@@ -68,14 +68,13 @@ namespace TruongMamNon.BackendApi.Controllers
         }
 
         [HttpPut("{ma}")]
-        public async Task<IActionResult> PutPhongBan(int ma, PhongBanVm model)
+        public async Task<IActionResult> PutPhongBan(int ma, CreatePhongBanVm model)
         {
             var phongBan = await _context.PhongBans.FindAsync(ma);
             if (phongBan == null)
             {
                 return NotFound(new ApiNotFoundResponse($"Không tìm thấy mã: {ma}"));
             }
-            phongBan.MaPhongBan = model.MaPhongBan;
             phongBan.TenPhongBan = model.TenPhongBan;
             phongBan.GhiChu = model.GhiChu;
             _context.PhongBans.Update(phongBan);

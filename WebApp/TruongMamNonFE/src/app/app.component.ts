@@ -59,6 +59,10 @@ export class AppComponent {
             label:'Phòng ban trường',
             routerLink:['/PhongBan']
           },
+          {
+            label:'Quản lý chức vụ',
+            routerLink:['/ChucVu']
+          },
           {label:'Ban giám hiệu'},
           {
             label:'Quản lý thông báo',
@@ -74,7 +78,14 @@ export class AppComponent {
         label:'Nhân sự',
         items:
         [
-          {label:'Quản lý nhân sự'},
+          {
+            label:'Loại nhân sự',
+            routerLink:['/LoaiNhanSu']
+          },
+          {
+            label:'Quản lý nhân sự',
+            routerLink:['/TraCuuNhanSu']
+          },
           {
             label:'Thống kê',
             items:
@@ -121,30 +132,8 @@ export class AppComponent {
               {label:'Điểm danh tháng'}
             ]
           },
-          {
-            label:'Sức khỏe',
-            items:[
-              {label:'Theo dõi sức khỏe mầm non'},
-              {label:'Nhật ký sức khỏe'},
-              {label:'Thống kê theo dõi sức khỏe mầm non'},
-              {label:'Danh sách theo dõi trẻ suy dinh dưỡng'},
-              {label:'Kết quả nuôi dưỡng'},
-              {label:'Bảng tiêu chuẩn cân nặng'},
-              {label:'Bảng tiêu chuẩn chiều cao'},
-            ]
-          },
-          {
-            label:'Thực đơn',
-            items:[
-              {
-                label:'Danh mục thực đơn',
-                // command:()=>this.router.navigate(['/DanhMucThucDon']),
-                routerLink:['/DanhMucThucDon'],
-              },
-              {label:'Danh mục món ăn'},
-              {label:'Thực đơn mầm non'},
-            ]
-          },
+          
+          
           {
             label:'Báo cáo Trường - Lớp',
             items:[
@@ -167,11 +156,37 @@ export class AppComponent {
         items:
         [
           {
+            label:'Sức khỏe',
+            items:[
+              {label:'Theo dõi sức khỏe mầm non'},
+              {label:'Nhật ký sức khỏe'},
+              {label:'Thống kê theo dõi sức khỏe mầm non'},
+              {label:'Danh sách theo dõi trẻ suy dinh dưỡng'},
+              {label:'Kết quả nuôi dưỡng'},
+              {label:'Bảng tiêu chuẩn cân nặng'},
+              {label:'Bảng tiêu chuẩn chiều cao'},
+            ]
+          },
+          {
             label:'Quản lý Tiêm chủng - Sổ giun - Vitamin',
             items:
             [
+              {
+                label: 'Danh mục vaccine',
+                routerLink:['/DanhMucVaccine']
+              },
+              {
+                label: 'Danh mục thuốc sổ giun',
+                routerLink:['/DanhMucThuocSoGiun']
+              },
+              {
+                label: 'Danh mục vitamin',
+                routerLink:['/DanhMucVitamin']
+              },
               {label:'Nhật ký tiêm chủng'},
+              
               {label:'Nhật ký sổ giun'},
+              
               {label:'Nhật ký uống vitamin'},
 
             ]
@@ -215,7 +230,19 @@ export class AppComponent {
       {
         label:'Nhà bếp',
         items:[
-          {label: 'Thực phẩm'}
+          {label: 'Thực phẩm'},
+          {
+            label:'Thực đơn',
+            items:[
+              {
+                label:'Danh mục thực đơn',
+                // command:()=>this.router.navigate(['/DanhMucThucDon']),
+                routerLink:['/DanhMucThucDon'],
+              },
+              {label:'Danh mục món ăn'},
+              {label:'Thực đơn mầm non'},
+            ]
+          },
         ]
       }
     ]   

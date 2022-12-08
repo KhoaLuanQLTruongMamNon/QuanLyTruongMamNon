@@ -3,12 +3,18 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
+import { ChucVu } from '../models/chuc-vu.model';
 import { DanhMucThucDon } from '../models/danh-muc-thuc-don.model';
 import { HocSinh } from '../models/hoc-sinh.model';
 import { KhoiLop } from '../models/khoi-lop.model';
+import { LoaiNhanSu } from '../models/loai-nhan-su.model';
 import { LopHoc } from '../models/lop-hoc.model';
+import { NhanSu } from '../models/nhan-su.model';
 import { NienHoc } from '../models/nien-hoc.model';
 import { PhongBan } from '../models/phong-ban.model';
+import { ThuocSoGiun } from '../models/thuoc-so-giun.model';
+import { Vaccine } from '../models/vaccine.model';
+import { Vitamin } from '../models/vitamin.model';
 
 @Injectable({
   providedIn: 'root',
@@ -32,8 +38,106 @@ export class DataService {
     this.newNienHoc
   );
   constructor(private httpClient: HttpClient) {}
+  public gioiTinhs:any[]=[{name: "Nam", key:"0"},{name:"Nữ", key:"1"}, {name:"Khác", key:"2"}];
+  public danTocs:any[]=[{"MaDanToc": "01","TenDanToc": "Kinh"},
+                        {"MaDanToc": "17","TenDanToc": "Chăm"},
+                        {"MaDanToc": "21", "TenDanToc": "Ra-glai"},
+                        {"MaDanToc": "12", "TenDanToc": "Ê-đê"},
+                        {"MaDanToc": "18", "TenDanToc": "Sán Dìu"},
+                        {"MaDanToc": "13", "TenDanToc": "Ba-na"},
+                        {"MaDanToc": "19", "TenDanToc": "Hrê"},
+                        {"MaDanToc": "36", "TenDanToc": "Chu-ru"},
+                        {"MaDanToc": "04", "TenDanToc": "Hoa"},
+                        {"MaDanToc": "54", "TenDanToc": "Rơ-măm"},
+                        {"MaDanToc": "15", "TenDanToc": "Sán Chay"},
+                        {"MaDanToc": "49", "TenDanToc": "Bố Y"},
+                        {"MaDanToc": "35", "TenDanToc": "Hà Nhì"},
+                        {"MaDanToc": "41", "TenDanToc": "La Hủ"},
+                        {"MaDanToc": "45", "TenDanToc": "Mảng"},
+                        {"MaDanToc": "11", "TenDanToc": "Ngái"},
+                        {"MaDanToc": "40", "TenDanToc": "Phù Lá"},
+                        {"MaDanToc": "06", "TenDanToc": "Mường"},
+                        {"MaDanToc": "42", "TenDanToc": "Lự"},
+                        {"MaDanToc": "37", "TenDanToc": "Lào"},
+                        {"MaDanToc": "38", "TenDanToc": "La Chi"},
+                        {"MaDanToc": "09", "TenDanToc": "Dao"},
+                        {"MaDanToc": "29", "TenDanToc": "Khơ-mú"},
+                        {"MaDanToc": "43", "TenDanToc": "Lô Lô"},
+                        {"MaDanToc": "53", "TenDanToc": "Ơ Đu"},
+                        {"MaDanToc": "51", "TenDanToc": "Pu Péo"},
+                        {"MaDanToc": "05", "TenDanToc": "Khơ-me"},
+                        {"MaDanToc": "33", "TenDanToc": "Kháng"},
+                        {"MaDanToc": "46", "TenDanToc": "Pà Thẻn"},
+                        {"MaDanToc": "32", "TenDanToc": "Chơ-ro"},
+                        {"MaDanToc": "56", "TenDanToc": "Không Xác Định"},
+                        {"MaDanToc": "28", "TenDanToc": "Mạ"},
+                        {"MaDanToc": "07", "TenDanToc": "Nùng"},
+                        {"MaDanToc": "55", "TenDanToc": "Người Nước Ngoài"},
+                        {"MaDanToc": "08", "TenDanToc": "Hmông"},
+                        {"MaDanToc": "20", "TenDanToc": "Mnông"},
+                        {"MaDanToc": "52", "TenDanToc": "Brâu"},
+                        {"MaDanToc": "23", "TenDanToc": "Bru-Vân Kiều"},
+                        {"MaDanToc": "44", "TenDanToc": "Chứt"},
+                        {"MaDanToc": "30", "TenDanToc": "Co"},
+                        {"MaDanToc": "16", "TenDanToc": "Cơ-ho"},
+                        {"MaDanToc": "47", "TenDanToc": "Cơ Lao"},
+                        {"MaDanToc": "26", "TenDanToc": "Cơ-tu"},
+                        {"MaDanToc": "48", "TenDanToc": "Cống"},
+                        {"MaDanToc": "10", "TenDanToc": "Gia-rai"},
+                        {"MaDanToc": "25", "TenDanToc": "Giáy"},
+                        {"MaDanToc": "27", "TenDanToc": "Gié-Triêng"},
+                        {"MaDanToc": "50", "TenDanToc": "Si La"},
+                        {"MaDanToc": "31", "TenDanToc": "Ta-ôi"},
+                        {"MaDanToc": "02", "TenDanToc": "Tày"},
+                        {"MaDanToc": "03", "TenDanToc": "Thái"},
+                        {"MaDanToc": "24", "TenDanToc": "Thổ"},
+                        {"MaDanToc": "34", "TenDanToc": "Xinh-mun"},
+                        {"MaDanToc": "14", "TenDanToc": "Xơ-đăng"},
+                        {"MaDanToc": "22", "TenDanToc": "Xtiêng"}];
 
-
+  public tonGiaos:any[]=[{"MaTonGiao": "99", "TenTonGiao": "Không"},
+                         {"MaTonGiao": "01", "TenTonGiao": "Phật giáo"},
+                         {"MaTonGiao": "02", "TenTonGiao": "Công giáo"},
+                         {"MaTonGiao": "03", "TenTonGiao": "Phật giáo Hòa Hảo"},
+                         {"MaTonGiao": "04", "TenTonGiao": "Hồi giáo"},
+                         {"MaTonGiao": "05", "TenTonGiao": "Cao Đài"},
+                         {"MaTonGiao": "06", "TenTonGiao": "Minh sư đạo"},
+                         {"MaTonGiao": "07", "TenTonGiao": "Minh Lý đạo"},
+                         {"MaTonGiao": "08", "TenTonGiao": "Tin Lành"},
+                         {"MaTonGiao": "09", "TenTonGiao": "Tịnh độ cư sĩ Phật hồi Việt Nam"},
+                         {"MaTonGiao": "10", "TenTonGiao": "Đạo tứ ấn hiếu nghĩa"},
+                         {"MaTonGiao": "11", "TenTonGiao": "Bửu sơn Kỳ Hương"},
+                         {"MaTonGiao": "12", "TenTonGiao": "Ba Ha'i"},
+                         {"MaTonGiao": "13", "TenTonGiao": "Tôn giáo khác"}];  
+                                                  
+  public quocGias:any[]=[{"MaQuocGia": "704", "TenQuocGia": "Việt Nam"},
+                         {"MaQuocGia": "100", "TenQuocGia": "Bungari"},                        
+                         {"MaQuocGia": "276", "TenQuocGia": "Cộng hoà DC Đức"},
+                         {"MaQuocGia": "276", "TenQuocGia": "Cộng hoà LB Đức"},
+                         {"MaQuocGia": "643", "TenQuocGia": "Cộng hoà LB Nga"},
+                         {"MaQuocGia": "348", "TenQuocGia": "Hunggari"},
+                         {"MaQuocGia": "643", "TenQuocGia": "Liên Xô (cũ)"},
+                         {"MaQuocGia": "703", "TenQuocGia": "Slovakia"},
+                         {"MaQuocGia": "09", "TenQuocGia": "Tiệp Khắc"},
+                         {"MaQuocGia": "156", "TenQuocGia": "Trung Quốc"},
+                         {"MaQuocGia": "764", "TenQuocGia": "Thái Lan"},
+                         {"MaQuocGia": "756", "TenQuocGia": "Thuỵ Sỹ"},
+                         {"MaQuocGia": "250", "TenQuocGia": "Cộng hoà Pháp"},
+                         {"MaQuocGia": "356", "TenQuocGia": "Ấn Độ"},
+                         {"MaQuocGia": "418", "TenQuocGia": "Cộng hoà CHDCND Lào"},
+                         {"MaQuocGia": "036", "TenQuocGia": "Australia"},
+                         {"MaQuocGia": "158", "TenQuocGia": "Đài Loan"},
+                         {"MaQuocGia": "392", "TenQuocGia": "Nhật Bản"},
+                         {"MaQuocGia": "024", "TenQuocGia": "AngoLa"},
+                         {"MaQuocGia": "840", "TenQuocGia": "Mỹ"},
+                         {"MaQuocGia": "410", "TenQuocGia": "Hàn Quốc"},
+                         {"MaQuocGia": "344", "TenQuocGia": "Hồng Kông"},
+                         {"MaQuocGia": "528", "TenQuocGia": "Hà Lan"},
+                         {"MaQuocGia": "702", "TenQuocGia": "Singapore"},
+                         {"MaQuocGia": "124", "TenQuocGia": "Canada"},
+                         {"MaQuocGia": "752", "TenQuocGia": "Thụy Điển"},
+                         {"MaQuocGia": "352", "TenQuocGia": "BắC Ai Len"},
+                         {"MaQuocGia": "75", "TenQuocGia": "Mỹ 2"}];                      
   //#region Danh mục thực đơn
   public newDanhMucThucDon: DanhMucThucDon = {
     maDanhMuc: 0,
@@ -179,6 +283,11 @@ export class DataService {
     return this.httpClient.get<LopHoc[]>(url, this.httpOptions);
   }
 
+  public getLopHocsByKhoiLop(maNienHoc:number, maKhoiLop:number): Observable<LopHoc[]> {
+    const url = `${this.REST_API_SERVER}/LopHocs/NienHoc/${maNienHoc}/${maKhoiLop}`;
+    return this.httpClient.get<LopHoc[]>(url, this.httpOptions);
+  }
+
   public postLopHoc(
     data: LopHoc
   ): Observable<LopHoc> {
@@ -206,6 +315,7 @@ export class DataService {
     ho:"",
     ten:"",
     gioiTinh:"",
+    maKhoiLop:0,
     maLopHoc:0,
     ngayNhapHoc:new Date(Date.now()),
     trangThaiHoc:"",
@@ -229,6 +339,7 @@ export class DataService {
     ngheNghiepPhuHuynh:"",
     emailPhuHuynh:"",
     diaChiPhuHuynh:"",
+    khoiLop:this.newKhoiLop,
     lopHoc:this.newLopHoc,
 
   };
@@ -255,6 +366,226 @@ export class DataService {
   ): Observable<HocSinh> {
     const url = `${this.REST_API_SERVER}/HocSinhs/${ma}`;
     return this.httpClient.delete<HocSinh>(url,this.httpOptions);
+  }
+  //#endregion
+
+  //#region Thuoc so giun
+  public newThuocSoGiun: ThuocSoGiun = {
+    maThuocSoGiun:0,
+    tenThuocSoGiun:"",
+    ghiChu:""
+  };
+  public getThuocSoGiuns(): Observable<ThuocSoGiun[]> {
+    const url = `${this.REST_API_SERVER}/ThuocSoGiuns`;
+    return this.httpClient.get<ThuocSoGiun[]>(url, this.httpOptions);
+  }
+
+  public postThuocSoGiun(
+    data: ThuocSoGiun
+  ): Observable<ThuocSoGiun> {
+    const url = `${this.REST_API_SERVER}/ThuocSoGiuns`;
+    return this.httpClient.post<ThuocSoGiun>(url, data,this.httpOptions);
+  }
+
+  public putThuocSoGiun(ma:number,
+    data: ThuocSoGiun
+  ): Observable<ThuocSoGiun> {
+    const url = `${this.REST_API_SERVER}/ThuocSoGiuns/${ma}`;
+    return this.httpClient.put<ThuocSoGiun>(url, data,this.httpOptions);
+  }
+
+  public deleteThuocSoGiun(ma:number
+  ): Observable<ThuocSoGiun> {
+    const url = `${this.REST_API_SERVER}/ThuocSoGiuns/${ma}`;
+    return this.httpClient.delete<ThuocSoGiun>(url,this.httpOptions);
+  }
+  //#endregion
+
+  //#region Vaccine
+  public newVaccine: Vaccine = {
+    maVaccine:0,
+    tenVaccine:"",
+    ghiChu:""
+  };
+  public getVaccines(): Observable<Vaccine[]> {
+    const url = `${this.REST_API_SERVER}/Vaccines`;
+    return this.httpClient.get<Vaccine[]>(url, this.httpOptions);
+  }
+
+  public postVaccine(
+    data: Vaccine
+  ): Observable<Vaccine> {
+    const url = `${this.REST_API_SERVER}/Vaccines`;
+    return this.httpClient.post<Vaccine>(url, data,this.httpOptions);
+  }
+
+  public putVaccine(ma:number,
+    data: Vaccine
+  ): Observable<Vaccine> {
+    const url = `${this.REST_API_SERVER}/Vaccines/${ma}`;
+    return this.httpClient.put<Vaccine>(url, data,this.httpOptions);
+  }
+
+  public deleteVaccine(ma:number
+  ): Observable<Vaccine> {
+    const url = `${this.REST_API_SERVER}/Vaccines/${ma}`;
+    return this.httpClient.delete<Vaccine>(url,this.httpOptions);
+  }
+  //#endregion
+
+  //#region Vitamin
+  public newVitamin: Vitamin = {
+    maVitamin:0,
+    tenVitamin:"",
+    ghiChu:""
+  };
+  public getVitamins(): Observable<Vitamin[]> {
+    const url = `${this.REST_API_SERVER}/Vitamins`;
+    return this.httpClient.get<Vitamin[]>(url, this.httpOptions);
+  }
+
+  public postVitamin(
+    data: Vitamin
+  ): Observable<Vitamin> {
+    const url = `${this.REST_API_SERVER}/Vitamins`;
+    return this.httpClient.post<Vitamin>(url, data,this.httpOptions);
+  }
+
+  public putVitamin(ma:number,
+    data: Vitamin
+  ): Observable<Vitamin> {
+    const url = `${this.REST_API_SERVER}/Vitamins/${ma}`;
+    return this.httpClient.put<Vitamin>(url, data,this.httpOptions);
+  }
+
+  public deleteVitamin(ma:number
+  ): Observable<Vitamin> {
+    const url = `${this.REST_API_SERVER}/Vitamins/${ma}`;
+    return this.httpClient.delete<Vitamin>(url,this.httpOptions);
+  }
+  //#endregion
+
+  //#region Loai nhan su
+  public newLoaiNhanSu: LoaiNhanSu = {
+    maLoaiNhanSu:0,
+    tenLoaiNhanSu:"",
+    ghiChu:""
+  };
+  public getLoaiNhanSus(): Observable<LoaiNhanSu[]> {
+    const url = `${this.REST_API_SERVER}/LoaiNhanSus`;
+    return this.httpClient.get<LoaiNhanSu[]>(url, this.httpOptions);
+  }
+
+  public postLoaiNhanSu(
+    data: LoaiNhanSu
+  ): Observable<LoaiNhanSu> {
+    const url = `${this.REST_API_SERVER}/LoaiNhanSus`;
+    return this.httpClient.post<LoaiNhanSu>(url, data,this.httpOptions);
+  }
+
+  public putLoaiNhanSu(ma:number,
+    data: LoaiNhanSu
+  ): Observable<LoaiNhanSu> {
+    const url = `${this.REST_API_SERVER}/LoaiNhanSus/${ma}`;
+    return this.httpClient.put<LoaiNhanSu>(url, data,this.httpOptions);
+  }
+
+  public deleteLoaiNhanSu(ma:number
+  ): Observable<LoaiNhanSu> {
+    const url = `${this.REST_API_SERVER}/LoaiNhanSus/${ma}`;
+    return this.httpClient.delete<LoaiNhanSu>(url,this.httpOptions);
+  }
+  //#endregion
+
+  //#region Chuc vu
+  public newChucVu: ChucVu = {
+    maChucVu:0,
+    tenChucVu:"",
+    ghiChu:"",
+    maLoaiNhanSu:0,
+    loaiNhanSu:this.newLoaiNhanSu
+  };
+  public getChucVus(maLoaiNhanSu:number): Observable<ChucVu[]> {
+    const url = `${this.REST_API_SERVER}/ChucVus/LoaiNhanSu/${maLoaiNhanSu}`;
+    return this.httpClient.get<ChucVu[]>(url, this.httpOptions);
+  }
+
+  public postChucVu(
+    data: ChucVu
+  ): Observable<ChucVu> {
+    const url = `${this.REST_API_SERVER}/ChucVus`;
+    return this.httpClient.post<ChucVu>(url, data,this.httpOptions);
+  }
+
+  public putChucVu(ma:number,
+    data: ChucVu
+  ): Observable<ChucVu> {
+    const url = `${this.REST_API_SERVER}/ChucVus/${ma}`;
+    return this.httpClient.put<ChucVu>(url, data,this.httpOptions);
+  }
+
+  public deleteChucVu(ma:number
+  ): Observable<ChucVu> {
+    const url = `${this.REST_API_SERVER}/ChucVus/${ma}`;
+    return this.httpClient.delete<ChucVu>(url,this.httpOptions);
+  }
+  //#endregion
+
+  //#region Nhan su
+  public newNhanSu: NhanSu = {
+    maNhanSu:"",
+    ho:"",
+    ten:"",
+    gioiTinh:"",
+    ngaySinh:new Date(),
+    noiSinh:"",
+    cmnd:"",
+    ngayCap:new Date(),
+    danToc:"",
+    tonGiao:"",
+    quocTich:"",
+    ngayVaoTruong:new Date(),
+    maPhongBan:0,
+    trangThaiLamViec:"",
+    lyDoThoiViec:"",
+    ngayCapNhat:new Date(),
+    maLoaiNhanSu:0,
+    maChucVu:0,
+    maKhoiLop:0,
+    sdt:"",
+    email:"",
+    hoKhau:"",
+    diaChi:"",
+    hinhAnh:"",
+    trangThaiTaiKhoan:"",
+    phongBan:this.newPhongBan,
+    loaiNhanSu:this.newLoaiNhanSu,
+    chucVu:this.newChucVu,
+    khoiLop:this.newKhoiLop,
+  };
+  public getNhanSus(): Observable<NhanSu[]> {
+    const url = `${this.REST_API_SERVER}/NhanSus`;
+    return this.httpClient.get<NhanSu[]>(url, this.httpOptions);
+  }
+
+  public postNhanSu(
+    data: NhanSu
+  ): Observable<NhanSu> {
+    const url = `${this.REST_API_SERVER}/NhanSus`;
+    return this.httpClient.post<NhanSu>(url, data,this.httpOptions);
+  }
+
+  public putNhanSu(ma:string,
+    data: NhanSu
+  ): Observable<NhanSu> {
+    const url = `${this.REST_API_SERVER}/NhanSus/${ma}`;
+    return this.httpClient.put<NhanSu>(url, data,this.httpOptions);
+  }
+
+  public deleteNhanSu(ma:string
+  ): Observable<NhanSu> {
+    const url = `${this.REST_API_SERVER}/NhanSus/${ma}`;
+    return this.httpClient.delete<NhanSu>(url,this.httpOptions);
   }
   //#endregion
 }

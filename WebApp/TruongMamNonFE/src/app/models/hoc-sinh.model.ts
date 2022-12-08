@@ -1,3 +1,4 @@
+import { KhoiLop } from "./khoi-lop.model";
 import { LopHoc } from "./lop-hoc.model";
 
 export interface HocSinh{
@@ -5,6 +6,7 @@ export interface HocSinh{
     ho:string;
     ten:string;
     gioiTinh:string;
+    maKhoiLop:number;
     maLopHoc:number;
     ngayNhapHoc:Date;
     trangThaiHoc:string;
@@ -30,5 +32,6 @@ export interface HocSinh{
     emailPhuHuynh:string;
     diaChiPhuHuynh:string;
 
+    khoiLop:KhoiLop;
     lopHoc:LopHoc;
 }

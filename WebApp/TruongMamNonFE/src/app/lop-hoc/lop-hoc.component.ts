@@ -182,7 +182,6 @@ export class LopHocComponent implements OnInit {
 
   public saveLopHoc() {
     console.log('saveLopHoc: ', this.lopHoc);
-    console.log('ten lop: ', this.lopHoc.maLop);
     if(!this.selectedKhoiLop){
       this.messageService.add({
         severity: 'error',
@@ -201,13 +200,12 @@ export class LopHocComponent implements OnInit {
       });
       return;
     }
+    this.lopHoc.maKhoiLop=this.selectedKhoiLop.maKhoiLop;
+    this.lopHoc.maNienHoc=this.selectedNienHoc.maNienHoc;
+    console.log('saveLopHoc: ', this.lopHoc);
+
     if (this.lopHoc.maLop === 0) {
-      if(this.selectedKhoiLop){
-        this.lopHoc.maKhoiLop=this.selectedKhoiLop.maKhoiLop;
-      }
-      if(this.selectedNienHoc){
-        this.lopHoc.maNienHoc=this.selectedNienHoc.maNienHoc;
-      }
+      
       this.dataService.postLopHoc(this.lopHoc).subscribe(
         (data) => {
           console.log('return data = ', data);
@@ -221,14 +219,6 @@ export class LopHocComponent implements OnInit {
         }
       );
     } else {
-      if(this.selectedKhoiLop){
-        this.lopHoc.maKhoiLop=this.selectedKhoiLop.maKhoiLop;
-      }
-      if(this.selectedNienHoc){
-        this.lopHoc.maNienHoc=this.selectedNienHoc.maNienHoc;
-      }
-      console.log('ma',this.lopHoc.maLop);
-      console.log('lop', this.lopHoc);
       this.dataService.putLopHoc(this.lopHoc.maLop, this.lopHoc).subscribe(
         (data) => {
           console.log('return data = ', data);

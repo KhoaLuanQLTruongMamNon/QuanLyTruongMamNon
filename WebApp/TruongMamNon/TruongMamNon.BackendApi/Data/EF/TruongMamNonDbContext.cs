@@ -73,12 +73,15 @@ namespace TruongMamNon.BackendApi.Data.EF
         public DbSet<NhanSuPhanQuyen> NhanSuPhanQuyens { get; set; }
         public DbSet<PhanQuyen> PhanQuyens { get; set; }
         public DbSet<PhongBan> PhongBans { get; set; }
-        public DbSet<PhieuSoGiun> SoGiuns { get; set; }
-        public DbSet<PhieuTiemVaccine> TiemVaccines { get; set; }
+        public DbSet<PhieuSoGiun> PhieuSoGiuns { get; set; }
+        public DbSet<PhieuTiemVaccine> PhieuTiemVaccines { get; set; }
         public DbSet<ThucDon> ThucDons { get; set; }
         public DbSet<ThucDonMonAn> ThucDonMonAns { get; set; }
         public DbSet<ThucPham> ThucPhams { get; set; }
-        public DbSet<PhieuUongVitamin> UongVitamins { get; set; }
+        public DbSet<PhieuUongVitamin> PhieuUongVitamins { get; set; }
+        public DbSet<Vaccine> Vaccines { get; set; }
+        public DbSet<ThuocSoGiun> ThuocSoGiuns { get; set; }
+        public DbSet<Vitamin> Vitamins { get; set; }
 
         #endregion DbSet
     }

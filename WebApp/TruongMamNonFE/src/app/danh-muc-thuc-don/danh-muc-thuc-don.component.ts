@@ -146,6 +146,7 @@ export class DanhMucThucDonComponent implements OnInit {
   }
 
   public saveDanhMucThucDon() {
+    this.submitted = true;
     console.log('saveDanhMucThucDon: ', this.danhMucThucDon);
     if (this.danhMucThucDon.maDanhMuc === 0) {
       this.dataService.postDanhMucThucDon(this.danhMucThucDon).subscribe(

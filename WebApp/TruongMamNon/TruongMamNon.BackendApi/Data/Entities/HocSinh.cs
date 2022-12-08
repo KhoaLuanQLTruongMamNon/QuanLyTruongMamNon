@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace TruongMamNon.BackendApi.Data.Entities
 {
     public class HocSinh
     {
+        public int Id { get; set; }
         public string MaHocSinh { get; set; }
         public string Ho { get; set; }
         public string Ten { get; set; }

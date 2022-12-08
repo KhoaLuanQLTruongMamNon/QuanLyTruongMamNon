@@ -64,6 +64,7 @@
     currentPageReportTemplate="Hiển thị {first} đến {last} trong {totalRecords} mục"
     [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[10, 25, 50]"
+    styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
   >
     <ng-template pTemplate="caption">
       <div class="flex align-items-center justify-content-between">
@@ -102,10 +103,10 @@
     <ng-template pTemplate="body" let-nienHoc>
       <tr>
         <td>{{ nienHoc.tenNienHoc }}</td>
-        <td>{{ nienHoc.batDauHK1 | date: "dd/MM/yyyy" }}</td>
-        <td>{{ nienHoc.ketThucHK1 | date: "dd/MM/yyyy" }}</td>
-        <td>{{ nienHoc.batDauHK2 | date: "dd/MM/yyyy" }}</td>
-        <td>{{ nienHoc.ketThucHK2 | date: "dd/MM/yyyy" }}</td>
+        <td>{{ nienHoc.batDauHK1 | date : "dd/MM/yyyy" }}</td>
+        <td>{{ nienHoc.ketThucHK1 | date : "dd/MM/yyyy" }}</td>
+        <td>{{ nienHoc.batDauHK2 | date : "dd/MM/yyyy" }}</td>
+        <td>{{ nienHoc.ketThucHK2 | date : "dd/MM/yyyy" }}</td>
         <td>
           <button
             pButton
@@ -160,6 +161,7 @@
         [(ngModel)]="nienHoc.batDauHK1"
         [showIcon]="true"
         dateFormat="dd/mm/yy"
+        appendTo="body"
       ></p-calendar>
     </div>
 
@@ -168,7 +170,8 @@
       <p-calendar
         [(ngModel)]="nienHoc.ketThucHK1"
         [showIcon]="true"
-        dateFormat="dd-mm-yy"
+        dateFormat="dd/mm/yy"
+        appendTo="body"
       ></p-calendar>
     </div>
 
@@ -177,7 +180,8 @@
       <p-calendar
         [(ngModel)]="nienHoc.batDauHK2"
         [showIcon]="true"
-        dateFormat="dd-mm-yy"
+        dateFormat="dd/mm/yy"
+        appendTo="body"
       ></p-calendar>
     </div>
 
@@ -186,7 +190,8 @@
       <p-calendar
         [(ngModel)]="nienHoc.ketThucHK2"
         [showIcon]="true"
-        dateFormat="dd-mm-yy"
+        dateFormat="dd/mm/yy"
+        appendTo="body"
       ></p-calendar>
     </div>
   </ng-template>

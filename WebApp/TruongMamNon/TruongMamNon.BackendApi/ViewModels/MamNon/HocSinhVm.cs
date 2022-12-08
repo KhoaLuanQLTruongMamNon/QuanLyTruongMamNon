@@ -4,10 +4,12 @@ namespace TruongMamNon.BackendApi.ViewModels.MamNon
 {
     public class HocSinhVm
     {
+        public int Id { get; set; }
         public string MaHocSinh { get; set; }
         public string Ho { get; set; }
         public string Ten { get; set; }
         public string GioiTinh { get; set; }
+        public int MaKhoiLop { get; set; }
         public int? MaLopHoc { get; set; }
         public DateTime NgayNhapHoc { get; set; }
         public string TrangThaiHoc { get; set; }
@@ -23,6 +25,12 @@ namespace TruongMamNon.BackendApi.ViewModels.MamNon
         public string DiaChi { get; set; }
         public string HinhAnh { get; set; }
 
+        //Tai Khoan
+
+        public string TrangThaiTaiKhoan { get; set; }
+
+        //Phu huynh
+
         public string HoTenPhuHuynh { get; set; }
         public DateTime? NamSinhPhuHuynh { get; set; }
         public string CMNDPhuHuynh { get; set; }
@@ -31,10 +39,7 @@ namespace TruongMamNon.BackendApi.ViewModels.MamNon
         public string EmailPhuHuynh { get; set; }
         public string DiaChiPhuHuynh { get; set; }
 
-        //Tai Khoan
-
-        public string TrangThaiTaiKhoan { get; set; }
-
+        public KhoiLop KhoiLop { get; set; }
         public LopHoc LopHoc { get; set; }
     }
 }

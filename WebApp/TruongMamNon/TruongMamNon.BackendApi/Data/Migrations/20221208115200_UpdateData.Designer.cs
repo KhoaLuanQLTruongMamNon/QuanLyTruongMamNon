@@ -12,8 +12,8 @@ using TruongMamNon.BackendApi.Data.EF;
 namespace TruongMamNon.BackendApi.Data.Migrations
 {
     [DbContext(typeof(TruongMamNonDbContext))]
-    [Migration("20221203141028_SeedData")]
-    partial class SeedData
+    [Migration("20221208115200_UpdateData")]
+    partial class UpdateData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -82,12 +82,17 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                     b.Property<string>("GhiChu")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("MaLoaiNhanSu")
+                        .HasColumnType("int");
+
                     b.Property<string>("TenChucVu")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.HasKey("MaChucVu");
+
+                    b.HasIndex("MaLoaiNhanSu");
 
                     b.ToTable("ChucVus", (string)null);
 
@@ -96,37 +101,71 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                         {
                             MaChucVu = 1,
                             GhiChu = "",
+                            MaLoaiNhanSu = 1,
                             TenChucVu = "Hiệu trưởng"
                         },
                         new
                         {
                             MaChucVu = 2,
                             GhiChu = "",
+                            MaLoaiNhanSu = 1,
                             TenChucVu = "Phó hiệu trưởng"
                         },
                         new
                         {
                             MaChucVu = 3,
                             GhiChu = "",
+                            MaLoaiNhanSu = 4,
                             TenChucVu = "Trưởng phòng"
                         },
                         new
                         {
                             MaChucVu = 4,
                             GhiChu = "",
+                            MaLoaiNhanSu = 4,
                             TenChucVu = "Phó trưởng phòng"
                         },
                         new
                         {
                             MaChucVu = 5,
                             GhiChu = "",
-                            TenChucVu = "Nhân viên"
+                            MaLoaiNhanSu = 2,
+                            TenChucVu = "Nhân viên y tế"
                         },
                         new
                         {
                             MaChucVu = 6,
                             GhiChu = "",
-                            TenChucVu = "Giáo viên"
+                            MaLoaiNhanSu = 2,
+                            TenChucVu = "Nhân viên khác"
+                        },
+                        new
+                        {
+                            MaChucVu = 7,
+                            GhiChu = "",
+                            MaLoaiNhanSu = 2,
+                            TenChucVu = "Nhân viên kế toán"
+                        },
+                        new
+                        {
+                            MaChucVu = 8,
+                            GhiChu = "",
+                            MaLoaiNhanSu = 2,
+                            TenChucVu = "Nhân viên văn thư"
+                        },
+                        new
+                        {
+                            MaChucVu = 9,
+                            GhiChu = "",
+                            MaLoaiNhanSu = 2,
+                            TenChucVu = "Nhân viên bảo vệ"
+                        },
+                        new
+                        {
+                            MaChucVu = 10,
+                            GhiChu = "",
+                            MaLoaiNhanSu = 2,
+                            TenChucVu = "Nhân viên bếp"
                         });
                 });
 
@@ -342,6 +381,9 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
                     b.Property<string>("LyDoNghiHoc")
                         .HasColumnType("nvarchar(max)");
 
@@ -408,7 +450,7 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                     b.HasData(
                         new
                         {
-                            MaHocSinh = "0",
+                            MaHocSinh = "1",
                             CMNDPhuHuynh = "012345678910",
                             DanToc = "Kinh",
                             DiaChi = "HCM",
@@ -420,12 +462,13 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                             Ho = "Lê Nguyễn Đại Đức",
                             HoKhau = "Long An",
                             HoTenPhuHuynh = "Lê Huỳnh Nam",
+                            Id = 1,
                             LyDoNghiHoc = "",
                             MaKhoiLop = 4,
                             MaLopHoc = 1,
                             MatKhau = "Client@123",
                             NamSinhPhuHuynh = new DateTime(1968, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayCapNhat = new DateTime(2022, 12, 3, 21, 10, 27, 374, DateTimeKind.Local).AddTicks(611),
+                            NgayCapNhat = new DateTime(2022, 12, 8, 18, 51, 59, 443, DateTimeKind.Local).AddTicks(1110),
                             NgayNhapHoc = new DateTime(2022, 12, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NgaySinh = new DateTime(2001, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NgheNghiepPhuHuynh = "Tự do",
@@ -645,6 +688,24 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                             MaLoaiNhanSu = 1,
                             GhiChu = "",
                             TenLoaiNhanSu = "Cán bộ quản lý"
+                        },
+                        new
+                        {
+                            MaLoaiNhanSu = 2,
+                            GhiChu = "",
+                            TenLoaiNhanSu = "Nhân viên"
+                        },
+                        new
+                        {
+                            MaLoaiNhanSu = 3,
+                            GhiChu = "",
+                            TenLoaiNhanSu = "Giáo viên"
+                        },
+                        new
+                        {
+                            MaLoaiNhanSu = 4,
+                            GhiChu = "",
+                            TenLoaiNhanSu = "Trưởng phó phòng/ban"
                         });
                 });
 
@@ -815,6 +876,7 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("DanToc")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -843,11 +905,14 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
                     b.Property<string>("LyDoThoiViec")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("MaChucVu")
+                    b.Property<int?>("MaChucVu")
                         .HasColumnType("int");
 
                     b.Property<int?>("MaKhoiLop")
@@ -868,6 +933,7 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("NgayCapNhat")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("NgaySinh")
@@ -878,11 +944,11 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("NoiSinh")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("QuocTich")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -896,6 +962,7 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("TonGiao")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -922,7 +989,7 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                     b.HasData(
                         new
                         {
-                            MaNhanSu = "0",
+                            MaNhanSu = "1",
                             CMND = "123456789",
                             DanToc = "Kinh",
                             DiaChi = "Tân Phú",
@@ -931,12 +998,13 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                             HinhAnh = "",
                             Ho = "Lê Nguyễn Đại Đức",
                             HoKhau = "Long An",
+                            Id = 1,
                             LyDoThoiViec = "",
                             MaChucVu = 3,
                             MaLoaiNhanSu = 1,
                             MaPhongBan = 1,
                             MatKhau = "Admin@123",
-                            NgayCapNhat = new DateTime(2022, 12, 3, 21, 10, 27, 374, DateTimeKind.Local).AddTicks(778),
+                            NgayCapNhat = new DateTime(2022, 12, 8, 18, 51, 59, 443, DateTimeKind.Local).AddTicks(1326),
                             NgaySinh = new DateTime(2001, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NgayVaoTruong = new DateTime(2020, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             NoiSinh = "Long An",
@@ -966,7 +1034,7 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                     b.HasData(
                         new
                         {
-                            MaNhanSu = "0",
+                            MaNhanSu = "1",
                             MaQuyen = 1
                         });
                 });
@@ -1065,6 +1133,30 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                             MaQuyen = 1,
                             GhiChu = "",
                             TenQuyen = "Admin"
+                        },
+                        new
+                        {
+                            MaQuyen = 2,
+                            GhiChu = "",
+                            TenQuyen = "Cán bộ quản lý"
+                        },
+                        new
+                        {
+                            MaQuyen = 3,
+                            GhiChu = "",
+                            TenQuyen = "Nhân viên"
+                        },
+                        new
+                        {
+                            MaQuyen = 4,
+                            GhiChu = "",
+                            TenQuyen = "Nhân viên bếp"
+                        },
+                        new
+                        {
+                            MaQuyen = 5,
+                            GhiChu = "",
+                            TenQuyen = "Giáo viên"
                         });
                 });
 
@@ -1205,7 +1297,49 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                         {
                             MaPhongBan = 1,
                             GhiChu = "",
+                            TenPhongBan = "Văn phòng"
+                        },
+                        new
+                        {
+                            MaPhongBan = 2,
+                            GhiChu = "",
+                            TenPhongBan = "Phòng ban giám hiệu"
+                        },
+                        new
+                        {
+                            MaPhongBan = 3,
+                            GhiChu = "",
+                            TenPhongBan = "Phòng hành chính quản trị"
+                        },
+                        new
+                        {
+                            MaPhongBan = 4,
+                            GhiChu = "",
+                            TenPhongBan = "Phòng y tế"
+                        },
+                        new
+                        {
+                            MaPhongBan = 5,
+                            GhiChu = "",
+                            TenPhongBan = "Phòng giáo dục thể chất"
+                        },
+                        new
+                        {
+                            MaPhongBan = 6,
+                            GhiChu = "",
+                            TenPhongBan = "Phòng giáo dục nghệ thuật"
+                        },
+                        new
+                        {
+                            MaPhongBan = 7,
+                            GhiChu = "",
                             TenPhongBan = "Phòng giáo viên"
+                        },
+                        new
+                        {
+                            MaPhongBan = 8,
+                            GhiChu = "",
+                            TenPhongBan = "Nhà bếp"
                         });
                 });
 
@@ -1392,6 +1526,26 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                     b.HasKey("MaThuocSoGiun");
 
                     b.ToTable("ThuocSoGiuns", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            MaThuocSoGiun = 1,
+                            GhiChu = "Để tẩy giun, trẻ chỉ cần uống một lần duy nhất gồm viên nén định lượng 500 mg vào buổi sáng để đạt hiệu quả tẩy giun tối ưu. ",
+                            TenThuocSoGiun = "Thuốc tẩy giun Mebendazol"
+                        },
+                        new
+                        {
+                            MaThuocSoGiun = 2,
+                            GhiChu = "Để tính toán liều dùng phù hợp, cha mẹ cần dựa trên cân nặng của trẻ với lượng tương ứng là 10mg cho mỗi kg cân nặng, trẻ cần uống 1 liều duy nhất để tẩy giun hiệu quả.",
+                            TenThuocSoGiun = "Thuốc tẩy giun Pyrantel"
+                        },
+                        new
+                        {
+                            MaThuocSoGiun = 3,
+                            GhiChu = "Loại thuốc tẩy giun này được sản xuất ở dạng viên nén 400mg uống duy nhất 1 lần, được khuyến cáo nên sử dụng vào buổi sáng.",
+                            TenThuocSoGiun = "Thuốc tẩy giun Albendazole"
+                        });
                 });
 
             modelBuilder.Entity("TruongMamNon.BackendApi.Data.Entities.Vaccine", b =>
@@ -1413,6 +1567,74 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                     b.HasKey("MaVaccine");
 
                     b.ToTable("Vaccines", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            MaVaccine = 1,
+                            GhiChu = "",
+                            TenVaccine = "Vắc xin cúm mùa"
+                        },
+                        new
+                        {
+                            MaVaccine = 2,
+                            GhiChu = "",
+                            TenVaccine = "Vắc xin phòng viêm phổi, viêm tai giữa, viêm màng não, nhiễm khuẩn huyết do phế cầu khuẩn"
+                        },
+                        new
+                        {
+                            MaVaccine = 3,
+                            GhiChu = "",
+                            TenVaccine = "Vắc xin Bạch hầu – Ho gà – Uốn ván"
+                        },
+                        new
+                        {
+                            MaVaccine = 4,
+                            GhiChu = "",
+                            TenVaccine = "Vắc xin Sởi – Quai bị – Rubella"
+                        },
+                        new
+                        {
+                            MaVaccine = 5,
+                            GhiChu = "",
+                            TenVaccine = "Vắc xin phòng viêm phổi, viêm tai giữa, viêm màng não, nhiễm khuẩn huyết do não mô cầu khuẩn"
+                        },
+                        new
+                        {
+                            MaVaccine = 6,
+                            GhiChu = "",
+                            TenVaccine = "Vắc xin Thủy đậu"
+                        },
+                        new
+                        {
+                            MaVaccine = 7,
+                            GhiChu = "",
+                            TenVaccine = "Vắc xin Viêm não Nhật Bản"
+                        },
+                        new
+                        {
+                            MaVaccine = 8,
+                            GhiChu = "",
+                            TenVaccine = "Vắc xin Viêm gan A+B"
+                        },
+                        new
+                        {
+                            MaVaccine = 9,
+                            GhiChu = "",
+                            TenVaccine = "Vắc xin thương hàn"
+                        },
+                        new
+                        {
+                            MaVaccine = 10,
+                            GhiChu = "",
+                            TenVaccine = "Vắc xin tả"
+                        },
+                        new
+                        {
+                            MaVaccine = 11,
+                            GhiChu = "",
+                            TenVaccine = "Vắc xin dại"
+                        });
                 });
 
             modelBuilder.Entity("TruongMamNon.BackendApi.Data.Entities.Vitamin", b =>
@@ -1434,6 +1656,56 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                     b.HasKey("MaVitamin");
 
                     b.ToTable("Vitamins", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            MaVitamin = 1,
+                            GhiChu = "Uống",
+                            TenVitamin = "Calci gluconat"
+                        },
+                        new
+                        {
+                            MaVitamin = 2,
+                            GhiChu = "Uống",
+                            TenVitamin = "Vitamin A "
+                        },
+                        new
+                        {
+                            MaVitamin = 3,
+                            GhiChu = "Uống",
+                            TenVitamin = "Vitamin A + D"
+                        },
+                        new
+                        {
+                            MaVitamin = 4,
+                            GhiChu = "Uống",
+                            TenVitamin = "Thiamin hydroclorid"
+                        },
+                        new
+                        {
+                            MaVitamin = 5,
+                            GhiChu = "Uống",
+                            TenVitamin = "Vitamin B2 "
+                        },
+                        new
+                        {
+                            MaVitamin = 6,
+                            GhiChu = "Uống",
+                            TenVitamin = "Vitamin B6"
+                        },
+                        new
+                        {
+                            MaVitamin = 7,
+                            GhiChu = "Uống",
+                            TenVitamin = "Vitamin C"
+                        },
+                        new
+                        {
+                            MaVitamin = 8,
+                            GhiChu = "Uống",
+                            TenVitamin = "Vitamin PP"
+                        });
                 });
 
             modelBuilder.Entity("TruongMamNon.BackendApi.Data.Entities.ChiTietPhieuNhapThucPham", b =>
@@ -1476,6 +1748,17 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                     b.Navigation("PhieuXuatThucPham");
 
                     b.Navigation("ThucPham");
+                });
+
+            modelBuilder.Entity("TruongMamNon.BackendApi.Data.Entities.ChucVu", b =>
+                {
+                    b.HasOne("TruongMamNon.BackendApi.Data.Entities.LoaiNhanSu", "LoaiNhanSu")
+                        .WithMany("ChucVus")
+                        .HasForeignKey("MaLoaiNhanSu")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LoaiNhanSu");
                 });
 
             modelBuilder.Entity("TruongMamNon.BackendApi.Data.Entities.DiemDanh", b =>
@@ -1578,9 +1861,7 @@ namespace TruongMamNon.BackendApi.Data.Migrations
                 {
                     b.HasOne("TruongMamNon.BackendApi.Data.Entities.ChucVu", "ChucVu")
                         .WithMany("NhanSus")
-                        .HasForeignKey("MaChucVu")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MaChucVu");
 
                     b.HasOne("TruongMamNon.BackendApi.Data.Entities.KhoiLop", "KhoiLop")
                         .WithMany("NhanSus")
@@ -1785,6 +2066,8 @@ namespace TruongMamNon.BackendApi.Data.Migrations
 
             modelBuilder.Entity("TruongMamNon.BackendApi.Data.Entities.LoaiNhanSu", b =>
                 {
+                    b.Navigation("ChucVus");
+
                     b.Navigation("NhanSus");
                 });
 

@@ -48,8 +48,8 @@
         icon="pi pi-file-excel"
         (click)="exportExcel()"
         class="p-button-success mr-2"
-        label="Excel"
-        pTooltip="Xuất Excel"
+        label="Xuất Excel"
+        pTooltip="Xuất file xlsx"
         tooltipPosition="bottom"
       ></button>
       <button
@@ -59,8 +59,8 @@
         icon="pi pi-file-pdf"
         (click)="exportPdf()"
         class="p-button-warning"
-        label="PDF"
-        pTooltip="Xuất PDF"
+        label="Xuất PDF"
+        pTooltip="Xuất file PDF"
         tooltipPosition="bottom"
       ></button>
     </ng-template>
@@ -72,7 +72,7 @@
     [rows]="10"
     [paginator]="true"
     [globalFilterFields]="['maHocSinh', 'ho', 'ten']"
-    [tableStyle]="{ 'min-width': '50rem' }"
+    [tableStyle]="{ 'min-width': '75rem' }"
     [rowHover]="true"
     dataKey="maHocSinh"
     currentPageReportTemplate="Hiển thị {first} đến {last} trong {totalRecords} mục"
@@ -121,7 +121,7 @@
         <th pSortableColumn="lopHoc" style="min-width: 5rem">
           Lớp học<p-sortIcon field="lopHoc"></p-sortIcon>
         </th>
-        <th style="min-width: 5rem"></th>
+        <th style="width: 8rem"></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-hocSinh>
@@ -135,14 +135,15 @@
         <td>{{ hocSinh.ngaySinh | date : "dd/MM/yyyy" }}</td>
         <td>{{ hocSinh.trangThaiHoc }}</td>
         <td>{{ hocSinh.ngayNhapHoc | date : "dd/MM/yyyy" }}</td>
-        <td>{{ hocSinh.lopHoc.tenLop }}</td>
+        <td>{{ hocSinh.lopHoc ? hocSinh.lopHoc.tenLop : "" }}</td>
         <td>
           <button
             pButton
             pRipple
             icon="pi pi-pencil"
             class="p-button-rounded p-button-success mr-2"
-            title="Sửa"
+            pTooltip="Sửa"
+            tooltipPosition="top"
             (click)="editHocSinh(hocSinh)"
           ></button>
           <button
@@ -150,7 +151,8 @@
             pRipple
             icon="pi pi-trash"
             class="p-button-rounded p-button-warning"
-            title="Xóa"
+            pTooltip="Xóa"
+            tooltipPosition="top"
             (click)="deleteHocSinh(hocSinh)"
           ></button>
         </td>
@@ -166,14 +168,14 @@
 
 <p-dialog
   [(visible)]="hocSinhDialog"
-  [style]="{ width: '70%' }"
+  [style]="{ width: '80%' }"
   header="Thông tin hồ sơ học sinh"
   [modal]="true"
   styleClass="p-fluid"
 >
   <ng-template pTemplate="content">
     <div class="p-fluid grid mt-4">
-      <div class="field col-12 md:col-4">
+      <div class="field col-12 md:col-3">
         <span class="p-float-label">
           <input
             type="text"
@@ -186,7 +188,7 @@
         </span>
       </div>
 
-      <div class="field col-12 md:col-4">
+      <div class="field col-12 md:col-2">
         <span class="p-float-label">
           <input
             type="text"
@@ -199,11 +201,11 @@
           <small class="p-error" *ngIf="submitted && !hocSinh.ho"
             >Họ không được để trống</small
           >
-          <label for="ho">Họ</label>
+          <label for="ho" class="required-field">Họ</label>
         </span>
       </div>
 
-      <div class="field col-12 md:col-4">
+      <div class="field col-12 md:col-1">
         <span class="p-float-label">
           <input
             type="text"
@@ -215,74 +217,141 @@
           <small class="p-error" *ngIf="submitted && !hocSinh.ten"
             >Tên không được để trống</small
           >
-          <label for="ten">Tên</label>
+          <label for="ten" class="required-field">Tên</label>
         </span>
       </div>
 
-      <div class="field col-12 md:col-4">
+      <div class="field col-12 md:col-3">
         <span class="p-float-label">
           <p-dropdown
-            [autoDisplayFirst]="false"
+            [(ngModel)]="selectedGioiTinh"
+            inputId="gioiTinh"
             [options]="gioiTinhs"
-            [(ngModel)]="hocSinh.gioiTinh"
-            optionLabel="name"
-            [autoDisplayFirst]="true"
-          ></p-dropdown>
-          <label for="gioiTinh">Giới tính</label>
+            placeholder="Chọn giới tính"
+          >
+            <ng-template pTemplate="selectedItem">
+              <div
+                class="gioiTinh-item gioiTinh-item-value"
+                *ngIf="selectedGioiTinh"
+              >
+                <div>{{ selectedGioiTinh.name }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-gioiTinh pTemplate="item">
+              <div class="gioiTinh-item">
+                <div>{{ gioiTinh?.name }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+          <label for="gioiTinh" class="required-field">Giới tính</label>
         </span>
       </div>
 
-      <div class="field col-12 md:col-4">
+      <div class="field col-12 md:col-3">
         <span class="p-float-label">
-          <input
-            type="text"
-            pInputText
-            id="khoiLop"
-            [(ngModel)]="hocSinh.lopHoc.khoiLop.tenKhoiLop"
-            disabled
-          />
-          <label for="khoiLop">Khối lớp</label>
+          <p-dropdown
+            [options]="khoiLops"
+            [(ngModel)]="selectedKhoiLop"
+            optionLabel="tenKhoiLop"
+            [filter]="true"
+            filterBy="tenKhoiLop"
+            dataKey="maKhoiLop"
+            placeholder="Chọn khối lớp"
+            (onChange)="onKhoiLopChange($event.value)"
+            appendTo="body"
+            [showClear]="false"
+          >
+            <ng-template pTemplate="selectedItem">
+              <div
+                class="khoiLop-item khoiLop-item-value"
+                *ngIf="selectedKhoiLop"
+              >
+                <div>{{ selectedKhoiLop.tenKhoiLop }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-khoiLop pTemplate="item">
+              <div class="khoiLop-item">
+                <div>{{ khoiLop?.tenKhoiLop }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+          <label for="khoiLop" class="required-field">Khối lớp</label>
         </span>
       </div>
-      <div class="field col-12 md:col-4">
+
+      <div class="field col-12 md:col-3">
         <span class="p-float-label">
-          <input
-            type="text"
-            pInputText
-            id="lopHoc"
-            [(ngModel)]="hocSinh.lopHoc.tenLop"
-            disabled
-          />
+          <p-dropdown
+            [options]="lopHocs"
+            [(ngModel)]="selectedLopHoc"
+            optionLabel="tenLop"
+            [filter]="true"
+            filterBy="tenLop"
+            dataKey="maLop"
+            (onChange)="onLopHocChange($event.value)"
+            appendTo="body"
+            [disabled]="!selectedKhoiLop"
+            [showClear]="true"
+            placeholder="Chọn lớp học"
+          >
+            <ng-template pTemplate="selectedItem">
+              <div class="lopHoc-item lopHoc-item-value" *ngIf="selectedLopHoc">
+                <div>{{ selectedLopHoc.tenLop }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-lopHoc pTemplate="item">
+              <div class="lopHoc-item">
+                <div>{{ lopHoc?.tenLop }}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
           <label for="lopHoc">Lớp học</label>
         </span>
       </div>
 
-      <div class="field col-12 md:col-4">
+      <div class="field col-12 md:col-3">
         <span class="p-float-label">
           <p-calendar
             [(ngModel)]="hocSinh.ngayNhapHoc"
             [showIcon]="true"
             dateFormat="dd/mm/yy"
-            disabled
+            appendTo="body"
           ></p-calendar>
           <label for="ngayNhapHoc">Ngày nhập học</label>
         </span>
       </div>
 
-      <div class="field col-12 md:col-4">
+      <div class="field col-12 md:col-3">
         <span class="p-float-label">
           <p-dropdown
             [autoDisplayFirst]="false"
             [options]="trangThaiHocs"
-            [(ngModel)]="hocSinh.trangThaiHoc"
+            [(ngModel)]="selectedTrangThaiHoc"
             optionLabel="name"
             [autoDisplayFirst]="true"
-          ></p-dropdown>
-          <label for="trangThaiHoc">Trạng thái học</label>
+            (onChange)="onTrangThaiHocChange($event.value)"
+          >
+            <ng-template pTemplate="selectedItem">
+              <div
+                class="trangThaiHoc-item trangThaiHoc-item-value"
+                *ngIf="selectedTrangThaiHoc"
+              >
+                <div>{{ selectedTrangThaiHoc.name }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-trangThaiHoc pTemplate="item">
+              <div class="trangThaiHoc-item">
+                <div>{{ trangThaiHoc?.name }}</div>
+              </div>
+            </ng-template></p-dropdown
+          >
+          <label for="trangThaiHoc" class="required-field"
+            >Trạng thái học</label
+          >
         </span>
       </div>
 
-      <div class="field col-12 md:col-4">
+      <div class="field col-12 md:col-3">
         <span class="p-float-label">
           <input
             type="text"
@@ -294,31 +363,20 @@
         </span>
       </div>
 
-      <div class="field col-12 md:col-4">
-        <span class="p-float-label">
-          <p-calendar
-            [(ngModel)]="hocSinh.ngayCapNhat"
-            [showIcon]="true"
-            dateFormat="dd/mm/yy"
-            disabled
-          ></p-calendar>
-          <label for="ngayCapNhat">Ngày cập nhật</label>
-        </span>
-      </div>
-
-      <div class="field col-12 md:col-4">
+      <div class="field col-12 md:col-3">
         <span class="p-float-label">
           <p-calendar
             [(ngModel)]="hocSinh.ngaySinh"
             [showIcon]="true"
             dateFormat="dd/mm/yy"
-            disabled
+            appendTo="body"
+            [defaultDate]="hocSinh.ngaySinh"
           ></p-calendar>
-          <label for="ngaySinh">Ngày sinh</label>
+          <label class="required-field" for="ngaySinh">Ngày sinh</label>
         </span>
       </div>
 
-      <div class="field col-12 md:col-4">
+      <div class="field col-12 md:col-3">
         <span class="p-float-label">
           <input
             type="text"
@@ -327,7 +385,202 @@
             [(ngModel)]="hocSinh.noiSinh"
             required
           />
-          <label for="noiSinh">Nơi sinh</label>
+          <label for="noiSinh" class="required-field">Nơi sinh</label>
+        </span>
+      </div>
+
+      <div class="field col-12 md:col-3">
+        <span class="p-float-label">
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="danTocs"
+            [(ngModel)]="selectedDanToc"
+            optionLabel="TenDanToc"
+            [autoDisplayFirst]="true"
+            appendTo="body"
+            [filter]="true"
+            filterBy="TenDanToc"
+            dataKey="MaDanToc"
+            (onChange)="onDanTocChange($event.value)"
+          ></p-dropdown>
+          <label for="danToc" class="required-field">Dân tộc</label>
+        </span>
+      </div>
+
+      <div class="field col-12 md:col-3">
+        <span class="p-float-label">
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="tonGiaos"
+            [(ngModel)]="selectedTonGiao"
+            optionLabel="TenTonGiao"
+            [autoDisplayFirst]="true"
+            appendTo="body"
+            [filter]="true"
+            filterBy="TenTonGiao"
+            dataKey="MaTonGiao"
+            (onChange)="onTonGiaoChange($event.value)"
+          ></p-dropdown>
+          <label for="tonGiao" class="required-field">Tôn giáo</label>
+        </span>
+      </div>
+
+      <div class="field col-12 md:col-3">
+        <span class="p-float-label">
+          <p-dropdown
+            [autoDisplayFirst]="false"
+            [options]="quocTichs"
+            [(ngModel)]="selectedQuocTich"
+            optionLabel="TenQuocGia"
+            [autoDisplayFirst]="true"
+            appendTo="body"
+            [filter]="true"
+            filterBy="TenQuocGia"
+            dataKey="MaQuocGia"
+            (onChange)="onQuocTichChange($event.value)"
+          ></p-dropdown>
+          <label for="quocTich" class="required-field">Quốc tịch</label>
+        </span>
+      </div>
+
+      <div class="field col-12 md:col-3">
+        <span class="p-float-label">
+          <textarea
+            id="ghiChu"
+            rows="2"
+            cols="30"
+            pInputTextarea
+            [(ngModel)]="hocSinh.ghiChu"
+          ></textarea>
+          <label for="ghiChu">Ghi Chú</label>
+        </span>
+      </div>
+
+      <div class="field col-12 md:col-3">
+        <span class="p-float-label">
+          <textarea
+            id="hoKhau"
+            rows="2"
+            cols="30"
+            pInputTextarea
+            [(ngModel)]="hocSinh.hoKhau"
+          ></textarea>
+          <label for="hoKhau" class="required-field">Hộ khẩu</label>
+        </span>
+      </div>
+
+      <div class="field col-12 md:col-3">
+        <span class="p-float-label">
+          <textarea
+            id="diaChi"
+            rows="2"
+            cols="30"
+            pInputTextarea
+            [(ngModel)]="hocSinh.diaChi"
+          ></textarea>
+          <label for="diaChi" class="required-field">Chỗ ở hiện nay</label>
+        </span>
+      </div>
+
+      <div class="field col-12 md:col-3">
+        <span class="p-float-label">
+          <p-calendar
+            [(ngModel)]="hocSinh.ngayCapNhat"
+            [showIcon]="true"
+            dateFormat="dd/mm/yy"
+            appendTo="body"
+          ></p-calendar>
+          <label for="ngayCapNhat">Ngày cập nhật</label>
+        </span>
+      </div>
+
+      <div class="field col-12 md:col-3">
+        <span class="p-float-label">
+          <input
+            type="text"
+            pInputText
+            id="hoTenPhuHuynh"
+            [(ngModel)]="hocSinh.hoTenPhuHuynh"
+            required
+          />
+          <small class="p-error" *ngIf="submitted && !hocSinh.hoTenPhuHuynh"
+            >Họ tên phụ huynh không được để trống</small
+          >
+          <label for="hoTenPhuHuynh" class="required-field"
+            >Họ tên phụ huynh</label
+          >
+        </span>
+      </div>
+
+      <div class="field col-12 md:col-3">
+        <span class="p-float-label">
+          <p-calendar
+            [(ngModel)]="hocSinh.namSinhPhuHuynh"
+            [showIcon]="true"
+            dateFormat="dd/mm/yy"
+            appendTo="body"
+          ></p-calendar>
+          <label for="namSinhPhuHuynh">Ngày sinh phụ huynh</label>
+        </span>
+      </div>
+
+      <div class="field col-12 md:col-3">
+        <span class="p-float-label">
+          <input
+            type="text"
+            pInputText
+            id="cmndPhuHuynh"
+            [(ngModel)]="hocSinh.cmndPhuHuynh"
+          />
+          <label for="cmndPhuHuynh">CMND Phụ huynh</label>
+        </span>
+      </div>
+
+      <div class="field col-12 md:col-3">
+        <span class="p-float-label">
+          <input
+            type="text"
+            pInputText
+            id="sdtPhuHuynh"
+            [(ngModel)]="hocSinh.sdtPhuHuynh"
+          />
+          <label for="sdtPhuHuynh">SĐT phụ huynh</label>
+        </span>
+      </div>
+
+      <div class="field col-12 md:col-3">
+        <span class="p-float-label">
+          <input
+            type="text"
+            pInputText
+            id="ngheNghiepPhuHuynh"
+            [(ngModel)]="hocSinh.ngheNghiepPhuHuynh"
+          />
+          <label for="ngheNghiepPhuHuynh">Nghề nghiệp phụ huynh</label>
+        </span>
+      </div>
+
+      <div class="field col-12 md:col-3">
+        <span class="p-float-label">
+          <input
+            type="text"
+            pInputText
+            id="emailPhuHuynh"
+            [(ngModel)]="hocSinh.emailPhuHuynh"
+          />
+          <label for="emailPhuHuynh">Email phụ huynh</label>
+        </span>
+      </div>
+
+      <div class="field col-12 md:col-3">
+        <span class="p-float-label">
+          <input
+            type="text"
+            pInputText
+            id="diaChiPhuHuynh"
+            [(ngModel)]="hocSinh.diaChiPhuHuynh"
+          />
+          <label for="diaChiPhuHuynh">Địa chỉ phụ huynh</label>
         </span>
       </div>
     </div>

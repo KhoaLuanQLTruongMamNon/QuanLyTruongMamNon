@@ -6,6 +6,7 @@ namespace TruongMamNon.BackendApi.Data.Entities
 {
     public class NhanSu
     {
+        public int Id { get; set; }
         public string MaNhanSu { get; set; }
         public string Ho { get; set; }
         public string Ten { get; set; }
@@ -23,7 +24,7 @@ namespace TruongMamNon.BackendApi.Data.Entities
         public string LyDoThoiViec { get; set; }
         public DateTime? NgayCapNhat { get; set; }
         public int MaLoaiNhanSu { get; set; }
-        public int MaChucVu { get; set; }
+        public int? MaChucVu { get; set; }
         public int? MaKhoiLop { get; set; }
         public string SoDienThoai { get; set; }
         public string Email { get; set; }

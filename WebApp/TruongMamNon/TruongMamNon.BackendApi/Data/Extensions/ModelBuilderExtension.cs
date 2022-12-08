@@ -119,14 +119,6 @@ namespace TruongMamNon.BackendApi.Data.Extensions
                     ChatBot = 11000
                 });
 
-            modelBuilder.Entity<ChucVu>().HasData(
-                new ChucVu() { MaChucVu = 1, TenChucVu = "Hiệu trưởng", GhiChu = "" },
-                new ChucVu() { MaChucVu = 2, TenChucVu = "Phó hiệu trưởng", GhiChu = "" },
-                new ChucVu() { MaChucVu = 3, TenChucVu = "Trưởng phòng", GhiChu = "" },
-                new ChucVu() { MaChucVu = 4, TenChucVu = "Phó trưởng phòng", GhiChu = "" },
-                new ChucVu() { MaChucVu = 5, TenChucVu = "Nhân viên", GhiChu = "" },
-                new ChucVu() { MaChucVu = 6, TenChucVu = "Giáo viên", GhiChu = "" });
-
             modelBuilder.Entity<LopHoc>().HasData(
                 new LopHoc() { MaLop = 1, TenLop = "Lớp mầm 1", MaKhoiLop = 4, SiSoToiDa = 80, HocPhi = 0, MaNienHoc = 4 },
                 new LopHoc() { MaLop = 2, TenLop = "Lớp mầm 2", MaKhoiLop = 4, SiSoToiDa = 80, HocPhi = 0, MaNienHoc = 4 },
@@ -135,7 +127,8 @@ namespace TruongMamNon.BackendApi.Data.Extensions
             modelBuilder.Entity<HocSinh>().HasData(
                 new HocSinh()
                 {
-                    MaHocSinh = "0",
+                    Id = 1,
+                    MaHocSinh = "1",
                     Ho = "Lê Nguyễn Đại Đức",
                     Ten = "Tâm",
                     GioiTinh = "Nam",
@@ -195,18 +188,46 @@ namespace TruongMamNon.BackendApi.Data.Extensions
                 new ThucDonMonAn() { MaThucDon = 1, MaMonAn = 2, SoLuong = 1 });
 
             modelBuilder.Entity<PhanQuyen>().HasData(
-                new PhanQuyen() { MaQuyen = 1, TenQuyen = "Admin", GhiChu = "" }); ;
+                new PhanQuyen() { MaQuyen = 1, TenQuyen = "Admin", GhiChu = "" },
+                new PhanQuyen() { MaQuyen = 2, TenQuyen = "Cán bộ quản lý", GhiChu = "" },
+                new PhanQuyen() { MaQuyen = 3, TenQuyen = "Nhân viên", GhiChu = "" },
+                new PhanQuyen() { MaQuyen = 4, TenQuyen = "Nhân viên bếp", GhiChu = "" },
+                new PhanQuyen() { MaQuyen = 5, TenQuyen = "Giáo viên", GhiChu = "" }
+                );
 
             modelBuilder.Entity<LoaiNhanSu>().HasData(
-                new LoaiNhanSu() { MaLoaiNhanSu = 1, TenLoaiNhanSu = "Cán bộ quản lý", GhiChu = "" });
+                new LoaiNhanSu() { MaLoaiNhanSu = 1, TenLoaiNhanSu = "Cán bộ quản lý", GhiChu = "" },
+                new LoaiNhanSu() { MaLoaiNhanSu = 2, TenLoaiNhanSu = "Nhân viên", GhiChu = "" },
+                new LoaiNhanSu() { MaLoaiNhanSu = 3, TenLoaiNhanSu = "Giáo viên", GhiChu = "" },
+                new LoaiNhanSu() { MaLoaiNhanSu = 4, TenLoaiNhanSu = "Trưởng phó phòng/ban", GhiChu = "" });
+
+            modelBuilder.Entity<ChucVu>().HasData(
+               new ChucVu() { MaChucVu = 1, TenChucVu = "Hiệu trưởng", GhiChu = "", MaLoaiNhanSu = 1 },
+               new ChucVu() { MaChucVu = 2, TenChucVu = "Phó hiệu trưởng", GhiChu = "", MaLoaiNhanSu = 1 },
+               new ChucVu() { MaChucVu = 3, TenChucVu = "Trưởng phòng", GhiChu = "", MaLoaiNhanSu = 4 },
+               new ChucVu() { MaChucVu = 4, TenChucVu = "Phó trưởng phòng", GhiChu = "", MaLoaiNhanSu = 4 },
+               new ChucVu() { MaChucVu = 5, TenChucVu = "Nhân viên y tế", GhiChu = "", MaLoaiNhanSu = 2 },
+               new ChucVu() { MaChucVu = 6, TenChucVu = "Nhân viên khác", GhiChu = "", MaLoaiNhanSu = 2 },
+               new ChucVu() { MaChucVu = 7, TenChucVu = "Nhân viên kế toán", GhiChu = "", MaLoaiNhanSu = 2 },
+               new ChucVu() { MaChucVu = 8, TenChucVu = "Nhân viên văn thư", GhiChu = "", MaLoaiNhanSu = 2 },
+               new ChucVu() { MaChucVu = 9, TenChucVu = "Nhân viên bảo vệ", GhiChu = "", MaLoaiNhanSu = 2 },
+               new ChucVu() { MaChucVu = 10, TenChucVu = "Nhân viên bếp", GhiChu = "", MaLoaiNhanSu = 2 });
 
             modelBuilder.Entity<PhongBan>().HasData(
-               new PhongBan() { MaPhongBan = 1, TenPhongBan = "Phòng giáo viên", GhiChu = "" });
+               new PhongBan() { MaPhongBan = 1, TenPhongBan = "Văn phòng", GhiChu = "" },
+               new PhongBan() { MaPhongBan = 2, TenPhongBan = "Phòng ban giám hiệu", GhiChu = "" },
+               new PhongBan() { MaPhongBan = 3, TenPhongBan = "Phòng hành chính quản trị", GhiChu = "" },
+               new PhongBan() { MaPhongBan = 4, TenPhongBan = "Phòng y tế", GhiChu = "" },
+               new PhongBan() { MaPhongBan = 5, TenPhongBan = "Phòng giáo dục thể chất", GhiChu = "" },
+               new PhongBan() { MaPhongBan = 6, TenPhongBan = "Phòng giáo dục nghệ thuật", GhiChu = "" },
+               new PhongBan() { MaPhongBan = 7, TenPhongBan = "Phòng giáo viên", GhiChu = "" },
+               new PhongBan() { MaPhongBan = 8, TenPhongBan = "Nhà bếp", GhiChu = "" });
 
             modelBuilder.Entity<NhanSu>().HasData(
                new NhanSu()
                {
-                   MaNhanSu = "0",
+                   Id = 1,
+                   MaNhanSu = "1",
                    Ho = "Lê Nguyễn Đại Đức",
                    Ten = "Tâm",
                    GioiTinh = "Nam",
@@ -235,7 +256,35 @@ namespace TruongMamNon.BackendApi.Data.Extensions
                });
 
             modelBuilder.Entity<NhanSuPhanQuyen>().HasData(
-              new NhanSuPhanQuyen() { MaNhanSu = "0", MaQuyen = 1 });
+              new NhanSuPhanQuyen() { MaNhanSu = "1", MaQuyen = 1 });
+
+            modelBuilder.Entity<Vaccine>().HasData(
+                new Vaccine() { MaVaccine = 1, TenVaccine = "Vắc xin cúm mùa", GhiChu = "" },
+                new Vaccine() { MaVaccine = 2, TenVaccine = "Vắc xin phòng viêm phổi, viêm tai giữa, viêm màng não, nhiễm khuẩn huyết do phế cầu khuẩn", GhiChu = "" },
+                new Vaccine() { MaVaccine = 3, TenVaccine = "Vắc xin Bạch hầu – Ho gà – Uốn ván", GhiChu = "" },
+                new Vaccine() { MaVaccine = 4, TenVaccine = "Vắc xin Sởi – Quai bị – Rubella", GhiChu = "" },
+                new Vaccine() { MaVaccine = 5, TenVaccine = "Vắc xin phòng viêm phổi, viêm tai giữa, viêm màng não, nhiễm khuẩn huyết do não mô cầu khuẩn", GhiChu = "" },
+                new Vaccine() { MaVaccine = 6, TenVaccine = "Vắc xin Thủy đậu", GhiChu = "" },
+                new Vaccine() { MaVaccine = 7, TenVaccine = "Vắc xin Viêm não Nhật Bản", GhiChu = "" },
+                new Vaccine() { MaVaccine = 8, TenVaccine = "Vắc xin Viêm gan A+B", GhiChu = "" },
+                new Vaccine() { MaVaccine = 9, TenVaccine = "Vắc xin thương hàn", GhiChu = "" },
+                new Vaccine() { MaVaccine = 10, TenVaccine = "Vắc xin tả", GhiChu = "" },
+                new Vaccine() { MaVaccine = 11, TenVaccine = "Vắc xin dại", GhiChu = "" });
+
+            modelBuilder.Entity<ThuocSoGiun>().HasData(
+                new ThuocSoGiun() { MaThuocSoGiun = 1, TenThuocSoGiun = "Thuốc tẩy giun Mebendazol", GhiChu = "Để tẩy giun, trẻ chỉ cần uống một lần duy nhất gồm viên nén định lượng 500 mg vào buổi sáng để đạt hiệu quả tẩy giun tối ưu. " },
+                new ThuocSoGiun() { MaThuocSoGiun = 2, TenThuocSoGiun = "Thuốc tẩy giun Pyrantel", GhiChu = "Để tính toán liều dùng phù hợp, cha mẹ cần dựa trên cân nặng của trẻ với lượng tương ứng là 10mg cho mỗi kg cân nặng, trẻ cần uống 1 liều duy nhất để tẩy giun hiệu quả." },
+                new ThuocSoGiun() { MaThuocSoGiun = 3, TenThuocSoGiun = "Thuốc tẩy giun Albendazole", GhiChu = "Loại thuốc tẩy giun này được sản xuất ở dạng viên nén 400mg uống duy nhất 1 lần, được khuyến cáo nên sử dụng vào buổi sáng." });
+
+            modelBuilder.Entity<Vitamin>().HasData(
+                new Vitamin() { MaVitamin = 1, TenVitamin = "Calci gluconat", GhiChu = "Uống" },
+                new Vitamin() { MaVitamin = 2, TenVitamin = "Vitamin A ", GhiChu = "Uống" },
+                new Vitamin() { MaVitamin = 3, TenVitamin = "Vitamin A + D", GhiChu = "Uống" },
+                new Vitamin() { MaVitamin = 4, TenVitamin = "Thiamin hydroclorid", GhiChu = "Uống" },
+                new Vitamin() { MaVitamin = 5, TenVitamin = "Vitamin B2 ", GhiChu = "Uống" },
+                new Vitamin() { MaVitamin = 6, TenVitamin = "Vitamin B6", GhiChu = "Uống" },
+                new Vitamin() { MaVitamin = 7, TenVitamin = "Vitamin C", GhiChu = "Uống" },
+                new Vitamin() { MaVitamin = 8, TenVitamin = "Vitamin PP", GhiChu = "Uống" });
         }
     }
 }

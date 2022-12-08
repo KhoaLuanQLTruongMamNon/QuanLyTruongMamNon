@@ -60,6 +60,23 @@ namespace TruongMamNon.BackendApi.Controllers
             return Ok(lopHocVms);
         }
 
+        [HttpGet("NienHoc/{maNienHoc}/{maKhoiLop}")]
+        public async Task<IActionResult> GetLopHocsByKhoiLop(int maNienHoc,int maKhoiLop)
+        {
+            var lopHocs = _context.LopHocs.Where(x => x.MaNienHoc == maNienHoc).Include(x => x.KhoiLop).Include(x => x.NienHoc).Where(x=>x.MaKhoiLop==maKhoiLop).OrderBy(x => x.TenLop);
+            var lopHocVms = await lopHocs.Select(x => new LopHocVm()
+            {
+                MaLop = x.MaLop,
+                TenLop = x.TenLop,
+                MaKhoiLop = x.MaKhoiLop,
+                HocPhi = x.HocPhi,
+                MaNienHoc = x.MaNienHoc,
+                KhoiLop = x.KhoiLop,
+                NienHoc = x.NienHoc,
+            }).ToListAsync();
+            return Ok(lopHocVms);
+        }
+
         [HttpGet("{ma}")]
         public async Task<IActionResult> GetByMa(int ma)
         {

@@ -20,6 +20,7 @@ export class NienHocComponent implements OnInit {
   public nienHocs: NienHoc[] = [];  
   public nienHoc:NienHoc=Object.assign({}, this.dataService.newNienHoc);
   public submitted: boolean = false;
+  public selectedBatDauHK1:Date|undefined;
   
   public ngOnInit(): void {
     this.getNienHocs();
@@ -38,9 +39,13 @@ export class NienHocComponent implements OnInit {
     this.nienHocDialog = true;
   }
 
-  public editNienHoc(danhMucThucDon: NienHoc): void {
-    console.log('edit danhMucThucDon:', danhMucThucDon);
-    this.nienHoc = danhMucThucDon;
+  public editNienHoc(nienHoc: NienHoc): void {
+    console.log('edit danhMucThucDon:', nienHoc);
+    this.nienHoc = nienHoc;
+    if(this.selectedBatDauHK1){
+
+      this.selectedBatDauHK1=this.nienHoc.batDauHK1;
+    }
     this.nienHocDialog = true;
   }
 
@@ -65,7 +70,6 @@ export class NienHocComponent implements OnInit {
   }
 
   public hideDialog(cancel = true, success = true): void {
-    console.log('hideDialog: ');
     this.nienHocDialog = false;
     if (cancel) {
       this.messageService.add({

@@ -1,4 +1,9 @@
 :host ::ng-deep {
+  .required-field::after {
+    content: "*";
+    color: red;
+    margin-left:2px;
+  }
     .p-paginator {
       .p-paginator-current {
         margin-left: auto;

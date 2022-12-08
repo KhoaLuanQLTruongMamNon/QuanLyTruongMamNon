@@ -38,6 +38,12 @@ import { DropdownModule } from 'primeng/dropdown';
 import {ScrollerModule} from 'primeng/scroller';
 import { HocSinhComponent } from './hoc-sinh/hoc-sinh.component';
 import {CardModule} from 'primeng/card';
+import { VaccineComponent } from './vaccine/vaccine.component';
+import { VitaminComponent } from './vitamin/vitamin.component';
+import { ThuocSoGiunComponent } from './thuoc-so-giun/thuoc-so-giun.component';
+import { LoaiNhanSuComponent } from './loai-nhan-su/loai-nhan-su.component';
+import { ChucVuComponent } from './chuc-vu/chuc-vu.component';
+import { NhanSuComponent } from './nhan-su/nhan-su.component';
 
 
 
@@ -51,6 +57,12 @@ import {CardModule} from 'primeng/card';
     PhongBanComponent,
     LopHocComponent,
     HocSinhComponent,
+    VaccineComponent,
+    VitaminComponent,
+    ThuocSoGiunComponent,
+    LoaiNhanSuComponent,
+    ChucVuComponent,
+    NhanSuComponent,
   ],
   imports: [
     BrowserModule,
